@@ -36,9 +36,12 @@ public class MainManager : MonoBehaviour
         //}
         //if (StartManager.Instance.name != null)
         //{
-        Debug.Log(StartManager.Instance.nameNow);
+        Debug.Log(nameNow);
+        nameNow = StartManager.Instance.nameNow;
+        Debug.Log(nameNow);
+        //Debug.Log(StartManager.Instance.nameNow);
         nameBest = StartManager.Instance.nameBest;
-        Debug.Log(nameBest);
+        //Debug.Log(nameBest);
         //}
         HighScoreText.text = "Best Score: " + nameBest + " : " + highScore;
 
@@ -96,10 +99,10 @@ public class MainManager : MonoBehaviour
         //Debug.Log(highScore);
         if (m_Points > highScore)
         {
-            Debug.Log("highscore");
+            //Debug.Log("highscore");
             highScore = m_Points;
-            nameNow = StartManager.Instance.nameNow;
             StartManager.Instance.highScore = highScore;
+            nameNow = StartManager.Instance.nameNow;
             StartManager.Instance.nameBest = nameNow;
             StartManager.Instance.SaveName();
             HighScoreText.text = "Best Score: " + nameNow + " : " + highScore;
