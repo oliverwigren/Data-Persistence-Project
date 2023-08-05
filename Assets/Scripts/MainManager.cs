@@ -19,7 +19,8 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
-    private string name;
+    private string nameNow;
+    private string nameBest;
     private int highScore;
 
     
@@ -27,9 +28,19 @@ public class MainManager : MonoBehaviour
     void Start()
     {
         StartManager.Instance.LoadName();
+        //if (StartManager.Instance.highScore != 0)
+        //{
+        //Debug.Log(highScore);
         highScore = StartManager.Instance.highScore;
-        name = StartManager.Instance.name;
-        HighScoreText.text = "Best Score: " + name + " : " + highScore;
+        //Debug.Log(highScore);
+        //}
+        //if (StartManager.Instance.name != null)
+        //{
+        Debug.Log(StartManager.Instance.nameNow);
+        nameBest = StartManager.Instance.nameBest;
+        Debug.Log(nameBest);
+        //}
+        HighScoreText.text = "Best Score: " + nameBest + " : " + highScore;
 
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
@@ -81,13 +92,20 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
-
+        //Debug.Log(m_Points);
+        //Debug.Log(highScore);
         if (m_Points > highScore)
         {
+            Debug.Log("highscore");
             highScore = m_Points;
-            name = StartManager.Instance.name;
+            nameNow = StartManager.Instance.nameNow;
+            StartManager.Instance.highScore = highScore;
+            StartManager.Instance.nameBest = nameNow;
             StartManager.Instance.SaveName();
+            HighScoreText.text = "Best Score: " + nameNow + " : " + highScore;
         }
-        HighScoreText.text = "Best Score: " + name + " : " + highScore;
+        //HighScoreText.text = "Best Score: " + name + " : " + highScore;
+
+        
     }
 }

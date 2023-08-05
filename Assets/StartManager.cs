@@ -9,7 +9,8 @@ using UnityEditor;
 public class StartManager : MonoBehaviour
 {
     public static StartManager Instance;
-    public string name;
+    public string nameNow;
+    public string nameBest;
     public int highScore;
     [SerializeField] private InputField input;
     [SerializeField] private Text scoreText;
@@ -28,15 +29,27 @@ public class StartManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        StartManager.Instance.LoadName();
+        scoreText.text = "High Score: " + StartManager.Instance.highScore;
+    }
+
     private void Update()
     {
-        name = input.text;
+        nameNow = input.text;
     }
     public void Play()
     {
-        if (name != null)
+        if (input.text != null)
         {
-        SaveName();
+            StartManager.Instance.nameNow = nameNow;
+            SaveName();
+        }
+        else
+        {
+            StartManager.Instance.nameNow = "Player";
+            SaveName();
         }
         SceneManager.LoadScene(1);
     }
@@ -49,17 +62,19 @@ public class StartManager : MonoBehaviour
 #endif
     }
 
-        [System.Serializable]
+    [System.Serializable]
     class SaveData
     {
-        public string name;
+        public string nameNow;
+        public string nameBest;
         public int highScore;
     }
 
     public void SaveName()
     {
         SaveData data = new SaveData();
-        data.name = name;
+        data.nameNow = nameNow;
+        data.nameBest = nameBest;
         data.highScore = highScore;
 
         string json = JsonUtility.ToJson(data);
@@ -73,7 +88,8 @@ public class StartManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            name = data.name;
+            nameNow = data.nameNow;
+            nameBest = data.nameBest;
             highScore = data.highScore;
         }
     }
